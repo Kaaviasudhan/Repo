@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">   
+</head>
+<body>
+    <div class="container">
+        <h1>Course Recommender</h1>
+        <form action="/recommend" method="post">
+            <label for="user_input">Enter your preferences:</label>
+            <input type="text" id="user_input" name="user_input" value="{{ user_input }}" placeholder="e.g., javascript jquery for beginners">
+            <button type="submit">Recommend Courses</button>
+        </form>
+        {% if not recommended_courses %}
+            <p>No courses found.</p>
+        {% else %}
+            <h2>Recommended Courses:</h2>
+            <ul>
+                {% for course in recommended_courses %}
+                    <li>{{ course['course_title'] }} | <a href="{{ course['url'] }}"><i class="fa fa-link"></i></a> |  {% if course['is_paid'] %}<span class="is-paid">Paid</span>{% else %}<span class="is-free">Free</span>{% endif %}</li>
+                {% endfor %}
+            </ul>            
+        {% endif %}
+    </div>
+</body>
+</html>
